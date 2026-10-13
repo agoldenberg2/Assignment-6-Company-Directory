@@ -8,7 +8,10 @@ class EmployeeNode:
     '''
 
     # Delete this line and implement the class below
-    pass
+    def __init__(self, name):
+        self.name = name
+        self.left = None
+        self.right = None
 
 class TeamTree:
     '''
@@ -22,13 +25,66 @@ class TeamTree:
     '''
     
     # Delete this line and implement the class below
-    pass
+    def __init__(self):
+        self.root = None
+    def insert(self, manager_name, employee_name, side, current_node=None):
+        if self.root is None:
+            return False
+        if current_node is None:
+            current_node = self.root
+
+        if current_node.name == manager_name:
+            if side == "left" and current_node.left is None:
+                current_node.left = EmployeeNode(employee_name)
+                print(f" {employee_name} added to the left of {manager_name}")
+                return True
+            elif side == "right" and current_node.right is None:
+                current_node.right = EmployeeNode(employee_name)
+                print (f"{employee_name} added to the right of {manager_name}")
+            else:
+                print("that position is taken")
+                return True
+            if current_node.right:
+                if self.insert(manager_name, employee_name, side, current_node.left):
+                    return True
+            if current_node.right:
+                if self.insert(manager_name, employee_name, side, current_node.right):
+                    return True
+                if current_node == self.root:
+                    print(f"manager {manager_name} was not found.")
+
+
+                    return False
+
+    def print_tree(self, node=None, level=0):
+        if node is None:
+            if level == 0:
+                node = self.root
+            else:
+                return
+        if node is None:
+            print("The team directory is empty.")
+            return
+        indent = "    " * level
+        print(f"{indent}- {node.name}")
+        self.print_tree(node.left, level + 1)
+        self.print_tree(node.right, level + 1)
+
+
 
 # Test your code here
 
+company = TeamTree()
+company.root = EmployeeNode("Jordan")
 
+company.insert("Jordan", "Riley", "left")
+company.insert("Jordan", "Taylor", "right")
 
-
+print(company.root.name)        # Jordan
+print(company.root.left.name)   # Riley
+print(company.root.right.name)  # Taylor
+    
+company.print_tree()
 
 
 
@@ -70,3 +126,6 @@ def company_directory():
             break
         else:
             print("❌ Invalid option. Try again.")
+
+if __name__ == "__main__":
+    company_directory()
