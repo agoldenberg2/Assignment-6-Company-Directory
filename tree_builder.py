@@ -79,6 +79,8 @@ company.root = EmployeeNode("Jordan")
 
 company.insert("Jordan", "Riley", "left")
 company.insert("Jordan", "Taylor", "right")
+company.insert("Riley", "Dana", "right")
+company.insert("Riley", "Morgan", "left")
 
 print(company.root.name)        # Jordan
 print(company.root.left.name)   # Riley
